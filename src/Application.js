@@ -1,4 +1,4 @@
-import Maire from "./Maire.mjs";
+import Maire from "./Maire.js";
 import { mairesMTL } from "./mairesdata.js";
 
 export default class Application {
@@ -9,7 +9,6 @@ export default class Application {
      * Il instancie l'objet Maire.
      */
     constructor() {
-        console.log(mairesMTL);
         this.oMaire = new Maire(mairesMTL);
         const btnRechercheNom = document.querySelector(".btn-recherche-nom");
         const btnRechercheDate = document.querySelector(".btn-recherche-date");
@@ -26,21 +25,34 @@ export default class Application {
     Mettre les autres méthodes ici.
     */
    rechercheNom(){
-
+        this.recherche("nom");     
    }
+
    rechercheDate(){
-
+    this.recherche("date");
    }
+
+   recherche(type){
+    const champDeRecherche = document.querySelector(".champ-recherche");
+    this.afficher(this.oMaire.rechercheMaires({type: type, valeur: champDeRecherche.value}));
+   }
+
    listeNom(){
+    this.liste("nom");
+   }
+   
+   listeDate(){
+    this.liste("date");
+   }
+
+   liste(ordre){
+    let ordreTri = document.querySelector("input[name='ordre']:checked");
     let param = {
-        type: "nom",
-        ordre : "DESC"
+        type: ordre,
+        ordre : ordreTri.value
     }
     let res = this.oMaire.listeMaires(param)
     this.afficher(res);
-   }
-   listeDate(){
-
    }
 
    afficher(data){

@@ -30,10 +30,22 @@ export default class Maire {
       * @returns {UnMaire[]} - Tableau des résultats;
      */
     rechercheMaires(params){
-        // Pour chaque
-        // Si x == y
-        // push dans le tableau de résultat
-        // Retourne le tableau de résultat...
+        let tableauFiltre = [];
+
+        if(params.type === "date"){
+                tableauFiltre = this.#aMaires.filter((maire)=>{
+                return Number(params.valeur) >= maire.debut 
+                    && (maire.fin == null ? true : Number(params.valeur) <= maire.fin);
+            });
+        }
+        if(params.type === "nom"){
+            tableauFiltre = this.#aMaires.filter((maire)=>{
+                return maire.nom.toLowerCase().includes(params.valeur.trim().toLowerCase()) 
+                    || maire.prenom.toLowerCase().includes(params.valeur.trim().toLowerCase());
+            })
+        }
+
+        return tableauFiltre;
     }
 
     /**
@@ -47,13 +59,13 @@ export default class Maire {
         if(params.type === "nom"){
             this.#aMaires.sort(function(a, b){
                 return a.nom.localeCompare(b.nom, "fr");
-            });
-            /*this.#aMaires.sort((a, b) => {
-                return a.nom.localeCompare(b.nom, "fr");
-            });*/
-            //this.#aMaires.sort((a, b) => a.nom.localeCompare(b.nom, "fr"));
+        });
         }
-        console.log(this.#aMaires[0]);
+        if(params.type === "date"){
+            this.#aMaires.sort(function(a, b){
+                return a.debut > b.debut || a.fin > a.fin;
+            })
+        }
         if(params.ordre === "DESC"){
             this.#aMaires.reverse();
         }
