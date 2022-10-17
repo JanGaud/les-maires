@@ -40,11 +40,12 @@ export default class Application {
    listeNom(){
     this.liste("nom");
    }
-   
+
    listeDate(){
     this.liste("date");
    }
 
+   //Fonction qui ordonne les tri selon la selection ASC ou DESC
    liste(ordre){
     let ordreTri = document.querySelector("input[name='ordre']:checked");
     let param = {

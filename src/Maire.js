@@ -31,13 +31,14 @@ export default class Maire {
      */
     rechercheMaires(params){
         let tableauFiltre = [];
-
+        //Instruction du code si c'est la recherche par date qui est choisit.
         if(params.type === "date"){
                 tableauFiltre = this.#aMaires.filter((maire)=>{
                 return Number(params.valeur) >= maire.debut 
                     && (maire.fin == null ? true : Number(params.valeur) <= maire.fin);
             });
         }
+        //Instruction du code si c'est la recherche par nom qui est choisit.
         if(params.type === "nom"){
             tableauFiltre = this.#aMaires.filter((maire)=>{
                 return maire.nom.toLowerCase().includes(params.valeur.trim().toLowerCase()) 
